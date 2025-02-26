@@ -1,5 +1,6 @@
 import { useUser } from "@/context/UserContext";
 import { format } from "date-fns";
+import Image from "next/image";
 
 interface HourlyForecastProps {
   hourlyData: Array<{
@@ -36,9 +37,11 @@ export default function HourlyForecast({ hourlyData }: HourlyForecastProps) {
             <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
               {format(new Date(hour.dt * 1000), "ha")}
             </span>
-            <img
+            <Image
               src={`https://openweathermap.org/img/wn/${hour.weather[0].icon}@2x.png`}
               alt={hour.weather[0].description}
+              width={48}
+              height={48}
               className="w-12 h-12"
             />
             <span className="text-lg font-semibold text-gray-900 dark:text-white">

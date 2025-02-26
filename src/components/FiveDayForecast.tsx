@@ -1,5 +1,6 @@
 import { useUser } from "@/context/UserContext";
 import { format } from "date-fns";
+import Image from "next/image";
 
 interface FiveDayForecastProps {
   dailyData: Array<{
@@ -40,9 +41,11 @@ export default function FiveDayForecast({ dailyData }: FiveDayForecastProps) {
             <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
               {format(new Date(day.dt * 1000), "EEE")}
             </span>
-            <img
+            <Image
               src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
               alt={day.weather[0].description}
+              width={48}
+              height={48}
               className="w-12 h-12"
             />
             <div className="flex flex-col items-center">

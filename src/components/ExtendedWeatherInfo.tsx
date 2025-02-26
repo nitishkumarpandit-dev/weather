@@ -1,5 +1,4 @@
 import { useWeather } from "@/context/WeatherContext";
-import { useUser } from "@/context/UserContext";
 
 function getWindDirection(degree: number): string {
   const directions = [
@@ -38,7 +37,6 @@ function getAQIDescription(aqi: number): { text: string; color: string } {
 
 export default function ExtendedWeatherInfo() {
   const { weatherData } = useWeather();
-  const { preferences } = useUser();
 
   if (!weatherData) return null;
 

@@ -23,18 +23,6 @@ export default function LocationSearch() {
   // Ensure savedLocations exists
   const savedLocations = preferences?.savedLocations || [];
 
-  // Debounce function
-  const debounce = <T extends (searchQuery: string) => void>(
-    func: T,
-    wait: number
-  ) => {
-    let timeout: NodeJS.Timeout;
-    return (searchQuery: string) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(searchQuery), wait);
-    };
-  };
-
   const handleSearch = async (searchQuery: string) => {
     if (!searchQuery.trim()) {
       setResults([]);
@@ -55,13 +43,26 @@ export default function LocationSearch() {
     }
   };
 
-  // Create a debounced version of handleSearch
-  const debouncedSearch = debounce(handleSearch, 300);
-
   // Update search results when query changes
   useEffect(() => {
+    const debounce = <T extends (searchQuery: string) => void>(
+      func: T,
+      wait: number
+    ) => {
+      let timeout: NodeJS.Timeout;
+      return (searchQuery: string) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func(searchQuery), wait);
+      };
+    };
+
+    const debouncedSearch = debounce(handleSearch, 300);
     debouncedSearch(query);
     setShowSavedLocations(false);
+
+    return () => {
+      clearTimeout(debouncedSearch as unknown as NodeJS.Timeout);
+    };
   }, [query]);
 
   const handleLocationSelect = (location: {

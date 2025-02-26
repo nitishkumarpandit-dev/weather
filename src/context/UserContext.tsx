@@ -113,7 +113,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
       // Save to localStorage
       localStorage.setItem("preferences", JSON.stringify(preferences));
     }
-  }, [preferences.theme]);
+  }, [preferences]);
 
   return (
     <UserContext.Provider
